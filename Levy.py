@@ -9,11 +9,13 @@ from tallenna_gui import Tallenna_gui
 #Luokka sisältää kaikki Levyn tiedot
 
 class Levy():
-    def __init__(self):
+    def __init__(self,Artisti="",LevynNimi="",JulkV="",Levy_Yht="",Painos=""):
         super().__init__()
         
 
-        self.ArtistinNimi = ""
-        self.LevynNimi = ""
-        self.JulkaisuVuosi = ""
-        self.Levy_yhtio_painos =""
+        self.ArtistinNimi = Artisti
+        self.LevynNimi = LevynNimi
+        self.JulkaisuVuosi = JulkV
+        self.Levy_yhtio = Levy_Yht
+        self.Painos = Painos
+        

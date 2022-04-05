@@ -14,7 +14,6 @@ from PySide2 import QtCore, QtGui, QtWidgets
 
 class Ui_Tallenna():
 
-
     """
     def __init__(self):
         super().__init__()
@@ -64,3 +63,4 @@ class Ui_Tallenna():
         self.Levy_label.setText(_translate("Tallenna", "Levyn Nimi"))
         self.Julkaisuvuosi_label.setText(_translate("Tallenna", "Julkaisuvuosi"))
         self.Levy_yhtio_painos_label.setText(_translate("Tallenna", "Levy-yhtiö / Painos"))
+        self.Painos_label.setText(_translate("Tallenna", "Painos"))
