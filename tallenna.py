@@ -26,30 +26,57 @@ class Ui_Tallenna():
         self.buttonBox.setOrientation(QtCore.Qt.Vertical)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
+
+        #Artistin nimi syöte ruutu
         self.ArtistinNimi = QtWidgets.QLineEdit(Tallenna)
         self.ArtistinNimi.setGeometry(QtCore.QRect(50, 60, 301, 28))
         self.ArtistinNimi.setObjectName("ArtistinNimi")
+
+        #Levyn nimi syöte ruutu
         self.LevynNimi = QtWidgets.QLineEdit(Tallenna)
         self.LevynNimi.setGeometry(QtCore.QRect(50, 130, 301, 28))
         self.LevynNimi.setObjectName("LevynNimi")
+
+
+        #Julkaisuvuosi syöte ruutu
         self.Julkaisuvuosi = QtWidgets.QLineEdit(Tallenna)
         self.Julkaisuvuosi.setGeometry(QtCore.QRect(50, 190, 151, 28))
         self.Julkaisuvuosi.setObjectName("Julkaisuvuosi")
+
+
+        #Levy-yhtiö syöte ruutu
         self.Painos = QtWidgets.QLineEdit(Tallenna)
         self.Painos.setGeometry(QtCore.QRect(50, 250, 361, 28))
+        self.Painos.setObjectName("LevyYhtio")
+
+        #Painos syöte ruutu
+        self.Painos = QtWidgets.QLineEdit(Tallenna)
+        self.Painos.setGeometry(QtCore.QRect(50, 310, 361, 28))
         self.Painos.setObjectName("Painos")
+
+
+        #Artisti Otsikko Teksti:
         self.Artisti_label = QtWidgets.QLabel(Tallenna)
         self.Artisti_label.setGeometry(QtCore.QRect(50, 30, 141, 16))
         self.Artisti_label.setObjectName("Artisti_label")
         self.Levy_label = QtWidgets.QLabel(Tallenna)
         self.Levy_label.setGeometry(QtCore.QRect(50, 110, 121, 16))
         self.Levy_label.setObjectName("Levy_label")
+
+        #Julkaisuvuosi Otsikko teksti:
         self.Julkaisuvuosi_label = QtWidgets.QLabel(Tallenna)
         self.Julkaisuvuosi_label.setGeometry(QtCore.QRect(50, 170, 81, 16))
         self.Julkaisuvuosi_label.setObjectName("Julkaisuvuosi_label")
-        self.Levy_yhtio_painos_label = QtWidgets.QLabel(Tallenna)
-        self.Levy_yhtio_painos_label.setGeometry(QtCore.QRect(50, 230, 111, 16))
-        self.Levy_yhtio_painos_label.setObjectName("Levy_yhtio_painos_label")
+
+        #levy-yhtiö Otsikko Teksti:
+        self.Levy_yhtio_label = QtWidgets.QLabel(Tallenna)
+        self.Levy_yhtio_label.setGeometry(QtCore.QRect(50, 230, 111, 16))
+        self.Levy_yhtio_label.setObjectName("Levy_yhtio_painos_label")
+
+        #Painos Otsikko teksti:
+        self.Painos_label = QtWidgets.QLabel(Tallenna)
+        self.Painos_label.setGeometry(QtCore.QRect(50, 290, 111, 16))
+        self.Painos_label.setObjectName("Levy_yhtio_painos_label")
 
         self.retranslateUi(Tallenna)
         self.buttonBox.accepted.connect(Tallenna.accept)
@@ -62,5 +89,5 @@ class Ui_Tallenna():
         self.Artisti_label.setText(_translate("Tallenna", "Artistin nimi"))
         self.Levy_label.setText(_translate("Tallenna", "Levyn Nimi"))
         self.Julkaisuvuosi_label.setText(_translate("Tallenna", "Julkaisuvuosi"))
-        self.Levy_yhtio_painos_label.setText(_translate("Tallenna", "Levy-yhtiö / Painos"))
+        self.Levy_yhtio_label.setText(_translate("Tallenna", "Levy-yhtiö / Painos"))
         self.Painos_label.setText(_translate("Tallenna", "Painos"))

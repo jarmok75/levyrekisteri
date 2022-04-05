@@ -6,7 +6,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 
 from tallenna import Ui_Tallenna
 
-from Levy import Levy
+#from Levy import Levy
 
 
 
