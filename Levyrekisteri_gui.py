@@ -5,11 +5,16 @@ from levyrekisteri import Ui_LevyRekisteri
 #Uuden ikkunan takia
 from tallenna import Ui_Tallenna
 from tallenna_gui import Tallenna_gui
+from Hae import Hae
 
 
 class MainWindow(QMainWindow,Ui_LevyRekisteri):
     def __init__(self):
         super().__init__()
+
+
+        #Tuodaan Hae luokan ilmentymä
+        self.Haku = Hae()
         
         #Lisää objektit ruudulle määritelty levyrekisteri luokassa
         self.setupUi(self)
@@ -17,8 +22,9 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
         #Sulkee kentän
         self.Sulje.clicked.connect(self.close)
 
-        #Etsi nappi
-        self.Etsi.clicked.connect(self.Hae)
+
+        #Kutsutaan Haku_vali funktiota kun Etsi nappia painetaan
+        self.Etsi.clicked.connect(self.Haku_vali)
 
         
         #Tehkentää haku ja tietoruudun ?
@@ -28,15 +34,42 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
 
         self.Lisaa.clicked.connect(self.LisaaLevy)
 
+        #Näytä kaikki nappi:
+        self.Naytä_Kaikki_levyt.clicked.connect(self.Hae_Levyt)
+
         
         #Lisää metodeita
 
         self.tallenna = Tallenna_gui()
 
-    def Hae(self):
+    def Haku_vali(self):
+
+        #Haettu teksti hakukentästä
+        haettava = str(self.Hakuruutu.text())
+
+        if haettava =="":
+            self.TietoIkkuna.setText("Tähän tulee hakutulokset tai näytetään kaikki levyt valinnan mukaan")
+
+        if haettava !="":
+            apu = "Etsitään merkkijonoa " + haettava + "..."
+            self.TietoIkkuna.setText(apu)
+
         
-        self.Hakuruutu.setText("Kutsutaan jatkosssa Haku metodia......")
-        self.TietoIkkuna.setText("Tähän tulee hakutulokset tai näytetään kaikki levyt valinnan mukaan")
+        #self.Hakuruutu.setText("Kutsutaan jatkosssa Haku metodia......")
+        
+        
+        #print(haettava)
+        #Kutsutaan Hae luokan Etsilevy funktiota missä etsi tiedostosta etsi toiminnallisuus toteutetaan
+        self.Haku.EtsiLevy(haettava)
+
+    def Hae_Levyt(self):
+        self.TietoIkkuna.setText("Haetaan levyjä....")
+        sis = self.Haku.Hae_kaikki()
+        self.TietoIkkuna.setText(sis)
+        #TODO
+        #self.Haku.Lue_Tiedosto()
+        
+      
 
 
     def NollaaHaku(self):

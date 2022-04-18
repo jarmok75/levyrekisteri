@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 # Form implementation generated from reading ui file './tallenna.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.1
@@ -45,9 +46,9 @@ class Ui_Tallenna():
 
 
         #Levy-yhtiö syöte ruutu
-        self.Painos = QtWidgets.QLineEdit(Tallenna)
-        self.Painos.setGeometry(QtCore.QRect(50, 250, 361, 28))
-        self.Painos.setObjectName("LevyYhtio")
+        self.LevYhtio = QtWidgets.QLineEdit(Tallenna)
+        self.LevYhtio.setGeometry(QtCore.QRect(50, 250, 361, 28))
+        self.LevYhtio.setObjectName("LevyYhtio")
 
         #Painos syöte ruutu
         self.Painos = QtWidgets.QLineEdit(Tallenna)
@@ -59,6 +60,8 @@ class Ui_Tallenna():
         self.Artisti_label = QtWidgets.QLabel(Tallenna)
         self.Artisti_label.setGeometry(QtCore.QRect(50, 30, 141, 16))
         self.Artisti_label.setObjectName("Artisti_label")
+        
+        #Levy_Yhtiö Otsikko Teksti:
         self.Levy_label = QtWidgets.QLabel(Tallenna)
         self.Levy_label.setGeometry(QtCore.QRect(50, 110, 121, 16))
         self.Levy_label.setObjectName("Levy_label")

@@ -6,6 +6,7 @@ from levyrekisteri import Ui_LevyRekisteri
 from tallenna import Ui_Tallenna
 #from tallenna_gui import Tallenna_gui
 
+
 #Luokka sisältää kaikki Levyn tiedot
 
 class Levy(object):
