@@ -15,6 +15,7 @@ Vaatimukset:
 Viikkosuunnitelma: 
 Viikko1:	Luokkien ja muuttujien suunnittelu. Luokkien ja muuttujien toteutus.
 Viikko2: 	Tiedon tallentaminen cvs- tiedostoon.
+Viikko3: 	Tiedon lukeminen rivettäin readlines() Funkitiolla ja tietojen pilkkominen levy Olioon
 
 
  
