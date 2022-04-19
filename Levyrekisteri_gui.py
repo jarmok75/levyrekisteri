@@ -55,13 +55,25 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
             self.TietoIkkuna.setText(apu)
 
         
+
+        
         #self.Hakuruutu.setText("Kutsutaan jatkosssa Haku metodia......")
         
         
         #print(haettava)
         #Kutsutaan Hae luokan Etsilevy funktiota missä etsi tiedostosta etsi toiminnallisuus toteutetaan
-        self.Haku.EtsiLevy(haettava)
+        haun_tulos = []
+        haun_tulos = self.Haku.EtsiLevy(haettava)
+        #Testi print
+        print (haun_tulos)
 
+        for levy in haun_tulos:
+            tieto = levy.ArtistinNimi + "\t" +  levy.LevynNimi + "\t"  +  levy.JulkaisuVuosi + "\t"  + levy.Levy_yhtio +  "\t"  +levy.Painos
+            self.TietoIkkuna.setText(tieto)
+
+
+
+        #Tätä Kutsutaan nyt kun painetaan "Näytä Kaikki levyt" nappia
     def Hae_Levyt(self):
         self.TietoIkkuna.setText("Haetaan levyjä....")
         sis = self.Haku.Hae_kaikki()
