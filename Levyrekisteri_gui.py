@@ -66,18 +66,28 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
         haun_tulos = self.Haku.EtsiLevy(haettava)
         #Testi print
         print (haun_tulos)
+        #Haetun tiedon saaminen TietoIkkunaan:
+        tieto =""
 
         for levy in haun_tulos:
-            tieto = levy.ArtistinNimi + "\t" +  levy.LevynNimi + "\t"  +  levy.JulkaisuVuosi + "\t"  + levy.Levy_yhtio +  "\t"  +levy.Painos
-            self.TietoIkkuna.setText(tieto)
-
+            tieto += levy.ArtistinNimi +"\t"+  levy.LevynNimi + "\t"  +  levy.JulkaisuVuosi + "\t"  + levy.Levy_yhtio +  "\t"  +levy.Painos + "\n"
+            
+            #self.TietoIkkuna.setText("\n".join(tieto))
+        self.TietoIkkuna.setText(tieto)
 
 
         #Tätä Kutsutaan nyt kun painetaan "Näytä Kaikki levyt" nappia
     def Hae_Levyt(self):
+        tieto =""
         self.TietoIkkuna.setText("Haetaan levyjä....")
         sis = self.Haku.Hae_kaikki()
-        self.TietoIkkuna.setText(sis)
+        for rivi in sis:
+
+
+            tieto += rivi +"\n"
+            tieto = tieto.replace(";","\t")
+
+        self.TietoIkkuna.setText(tieto)
         #TODO
         #self.Haku.Lue_Tiedosto()
         

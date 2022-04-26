@@ -54,15 +54,14 @@ class Hae(QMainWindow,Ui_Tallenna):
             for levy in lista:
                 print(levy.ArtistinNimi, " "  ,levy.LevynNimi, " " , levy.JulkaisuVuosi, " " ,  levy.Levy_yhtio, " "  , levy.Painos)
                 #Verrataan ArtistinNimeä Haettuun merkkijonoon
-                if levy.ArtistinNimi == mj:
-                    print ("Löytyi Haettu artisti")
-                    #Lisätää löydetty levy listaan Artisti nimen perusteella
+                artisti = levy.ArtistinNimi
+                levyn_nimi = levy.LevynNimi
+                #Löytyykö haettua merkkijonoa mj merkkijonojen artisti tai levyn_nimi sisältä
+                if  mj in artisti or mj in levyn_nimi:
+                    print ("Löytyi Haettu artisti tai levy")
+                    #Lisätään löydetty levy listaan Artisti nimen tai Levyn nimen  perusteella
                     loydetyt.append(levy)
-                if levy.LevynNimi == mj:
-                    print ("Löytyi Haettu levy")
-                    #Lisätää löydetty levy listaan Levyn nimen perusteella
-                    loydetyt.append(levy)
-            
+                
             return loydetyt
                 
 
@@ -86,7 +85,14 @@ class Hae(QMainWindow,Ui_Tallenna):
     #Saantimetodi tiedoston sisällölle
     def Hae_kaikki(self):
         with open("levyt.csv") as tiedosto:
+
+
+
             sisalto = tiedosto.read()
-            sisalto = sisalto.replace(";","\t")
+            #Palauttaa listan
+            sisalto2 = sorted(sisalto.split("\n"))
+            #print (sisalto2)
+            #Lista Sisalto 2 pitäisi saada merkki jono muotoon jotta voidaan näytttää tietoruudulla
+            
                 
-        return sisalto
+        return sisalto2

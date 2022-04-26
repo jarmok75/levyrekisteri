@@ -42,7 +42,8 @@ class Tallenna_gui(QDialog,Ui_Tallenna):
         
         rivit = [self.levy.ArtistinNimi, self.levy.LevynNimi, self.levy.JulkaisuVuosi,self.levy.Levy_yhtio, self.levy.Painos ]
         #";".join(str(alkio) for alkio in rivit)
-
+        
+ 
         print(rivit)
  
 
