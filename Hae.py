@@ -65,6 +65,7 @@ class Hae(QMainWindow,Ui_Tallenna):
             return loydetyt
                 
 
+    # Try Catch jos tiedostoa ei löydy
 
     #Tämä ei nyt käytössä:
     def Lue_Tiedosto(self):
