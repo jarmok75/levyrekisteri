@@ -73,7 +73,11 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
             tieto += levy.ArtistinNimi +"\t"+  levy.LevynNimi + "\t"  +  levy.JulkaisuVuosi + "\t"  + levy.Levy_yhtio +  "\t"  +levy.Painos + "\n"
             
             #self.TietoIkkuna.setText("\n".join(tieto))
-        self.TietoIkkuna.setText(tieto)
+        if len(tieto) > 2:
+            self.TietoIkkuna.setText(tieto)
+        else:
+            self.TietoIkkuna.setText("Ei löydy haettua tietoa....")
+
 
 
         #Tätä Kutsutaan nyt kun painetaan "Näytä Kaikki levyt" nappia

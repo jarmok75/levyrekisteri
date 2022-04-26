@@ -44,18 +44,18 @@ class Tallenna_gui(QDialog,Ui_Tallenna):
         #";".join(str(alkio) for alkio in rivit)
         
  
-        print(rivit)
+        #print(rivit)
  
 
         rivit[4] = str(rivit[4]) + ";"
-        print(rivit)
+        #print(rivit)
 
 
         with open("levyt.csv", "a") as tiedosto:
             for i in rivit:
                 #rivi = ";".join(i)
                 rivi = i
-                tiedosto.write(rivi+";")
+                tiedosto.write(rivi+";\t")
             tiedosto.write("\n")
 
 
