@@ -22,6 +22,8 @@ Viikko3: 	Tiedon lukeminen rivettäin readlines() Funkitiolla ja tietojen pilkko
 	
 Viikko4: Levyjen näytön korjaus tasamittaiseksi Graffisen käyttöliittymän tietoruudulla
 
+Viikko5: Tasaus jatkuu. ideointia, miten levyn tietoja voisi muokata tai levyä poistaa
+
 
  
 UserStory1
