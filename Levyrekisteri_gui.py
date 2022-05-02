@@ -1,3 +1,4 @@
+from posixpath import split
 from PySide2.QtWidgets import QApplication, QMainWindow
 
 #Importoidaan Qt designer5 tuottama Graaffinen käyttöliittymä aihio
@@ -57,7 +58,7 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
         
 
         
-        #self.Hakuruutu.setText("Kutsutaan jatkosssa Haku metodia......")
+        
         
         
         #print(haettava)
@@ -73,11 +74,16 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
             tieto += levy.ArtistinNimi +"\t"+  levy.LevynNimi + "\t"  +  levy.JulkaisuVuosi + "\t"  + levy.Levy_yhtio +  "\t"  +levy.Painos + "\n"
             
             #self.TietoIkkuna.setText("\n".join(tieto))
+        
+            
+
+
+            
         if len(tieto) > 2:
             self.TietoIkkuna.setText(tieto)
         else:
             self.TietoIkkuna.setText("Ei löydy haettua tietoa....")
-
+        
 
 
         #Tätä Kutsutaan nyt kun painetaan "Näytä Kaikki levyt" nappia
@@ -85,15 +91,26 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
         tieto =""
         self.TietoIkkuna.setText("Haetaan levyjä....")
         sis = self.Haku.Hae_kaikki()
+
+
         for rivi in sis:
+            #testi = rivi.split(";")
+            #pituus = len(testi[0])
+            
+            #if pituus > 12:
+            #        tieto += rivi +"\n"
+            #        print (testi[0])
+                    
+            #else:
+            
 
-
-            tieto += rivi +"\n"
-            tieto = tieto.replace(";","\t")
+                tieto += rivi +"\n"
+                tieto = tieto.replace(";","\t")
 
         self.TietoIkkuna.setText(tieto)
-        #TODO
-        #self.Haku.Lue_Tiedosto()
+        
+       
+      
         
       
 

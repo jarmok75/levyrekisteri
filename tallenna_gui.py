@@ -32,8 +32,16 @@ class Tallenna_gui(QDialog,Ui_Tallenna):
 
     def tallennaLevy(self):
         
-        self.levy.ArtistinNimi = self.ArtistinNimi.text()
-        self.levy.LevynNimi = self.LevynNimi.text()
+        bandi = self.ArtistinNimi.text()
+        if len(bandi) < 11:
+            bandi = bandi + "\t"
+        self.levy.ArtistinNimi = bandi
+
+        ln = self.LevynNimi.text()
+        if len(ln) < 11:
+            ln = ln + "\t"
+
+        self.levy.LevynNimi = ln
         self.levy.JulkaisuVuosi = self.Julkaisuvuosi.text()
         self.levy.Levy_yhtio = self.LevYhtio.text()
         self.levy.Painos = self.Painos.text()

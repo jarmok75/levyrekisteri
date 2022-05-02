@@ -17,6 +17,14 @@ class Hae(QMainWindow,Ui_Tallenna):
         super().__init__()
         self.haettavaString = ""
         #self.paaikkuna = MainWindow()
+
+
+
+
+
+
+
+
         
 
     def EtsiLevy(self, mj=""):
@@ -28,6 +36,11 @@ class Hae(QMainWindow,Ui_Tallenna):
         lista = []
         #hakutulosten löytämis lista
         loydetyt = []
+
+
+        #Jos tyhjä haku palautetaan tyhjä lista, 
+        if mj.strip() =="":
+            return loydetyt
         
         with open("levyt.csv") as tiedosto:
 
@@ -57,7 +70,7 @@ class Hae(QMainWindow,Ui_Tallenna):
                 artisti = levy.ArtistinNimi
                 levyn_nimi = levy.LevynNimi
                 #Löytyykö haettua merkkijonoa mj merkkijonojen artisti tai levyn_nimi sisältä
-                if  mj in artisti or mj in levyn_nimi:
+                if  mj.lower() in artisti.lower() or mj.lower() in levyn_nimi.lower():
                     print ("Löytyi Haettu artisti tai levy")
                     #Lisätään löydetty levy listaan Artisti nimen tai Levyn nimen  perusteella
                     loydetyt.append(levy)
@@ -65,22 +78,6 @@ class Hae(QMainWindow,Ui_Tallenna):
             return loydetyt
                 
 
-    # Try Catch jos tiedostoa ei löydy
-
-    #Tämä ei nyt käytössä:
-    def Lue_Tiedosto(self):
-        lista = []
-        
-        with open("levyt.csv") as tiedosto:
-
-            for rivi in tiedosto.readlines():
-                
-                #Tähän miten rivistä saadaan Artisin nimi, Levyn nimi, Julkaisuvuosi, Levy_yht, painos
-                
-                uusi_levy = Levy()
-                lista.append(uusi_levy)
-            #print(lista)
-        
 
 
     #Saantimetodi tiedoston sisällölle
@@ -92,7 +89,7 @@ class Hae(QMainWindow,Ui_Tallenna):
             sisalto = tiedosto.read()
             #Palauttaa listan
             sisalto2 = sorted(sisalto.split("\n"))
-            #print (sisalto2)
+           
             #Lista Sisalto 2 pitäisi saada merkki jono muotoon jotta voidaan näytttää tietoruudulla
             
                 
