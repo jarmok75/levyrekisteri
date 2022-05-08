@@ -64,7 +64,7 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
         #print(haettava)
         #Kutsutaan Hae luokan Etsilevy funktiota missä etsi tiedostosta etsi toiminnallisuus toteutetaan
         haun_tulos = []
-        haun_tulos = self.Haku.EtsiLevy(haettava)
+        haun_tulos = self.Haku.Etsi(haettava)
         #Testi print
         print (haun_tulos)
         #Haetun tiedon saaminen TietoIkkunaan:
@@ -76,8 +76,6 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
             #self.TietoIkkuna.setText("\n".join(tieto))
         
             
-
-
             
         if len(tieto) > 2:
             self.TietoIkkuna.setText(tieto)
@@ -88,27 +86,34 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
 
         #Tätä Kutsutaan nyt kun painetaan "Näytä Kaikki levyt" nappia
     def Hae_Levyt(self):
+
+        """
         tieto =""
         self.TietoIkkuna.setText("Haetaan levyjä....")
         sis = self.Haku.Hae_kaikki()
 
 
         for rivi in sis:
-            #testi = rivi.split(";")
-            #pituus = len(testi[0])
-            
-            #if pituus > 12:
-            #        tieto += rivi +"\n"
-            #        print (testi[0])
-                    
-            #else:
-            
+
 
                 tieto += rivi +"\n"
                 tieto = tieto.replace(";","\t")
 
         self.TietoIkkuna.setText(tieto)
-        
+
+        """
+        haun_tulos = []
+        haun_tulos = self.Haku.LueLevyt()
+        tieto =""
+
+        for levy in haun_tulos:
+            tieto += levy.ArtistinNimi +"\t"+  levy.LevynNimi + "\t"  +  levy.JulkaisuVuosi + "\t"  + levy.Levy_yhtio +  "\t"  +levy.Painos + "\n"
+            
+            
+        if len(haun_tulos) > 0:
+            self.TietoIkkuna.setText(tieto)
+        else:
+            self.TietoIkkuna.setText("Ei löydy haettua tietoa....")
        
       
         

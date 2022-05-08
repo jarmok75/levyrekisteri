@@ -18,47 +18,41 @@ class Hae(QMainWindow,Ui_Tallenna):
         self.haettavaString = ""
         #self.paaikkuna = MainWindow()
 
-
-
-
-
-
-
-
         
-
-    def EtsiLevy(self, mj=""):
-        #Tänne Levyn / artistin etsintä Tiedostosta
-        #Tiedoston luku tänne
-        print("Ollaan Hae luokan Etsi levy Funktiossa.... ja etsitään merkkijonoa", mj)
+    #Tiedoston lukeminen ja palautetaan oliolistana 
+    def LueLevyt(self):
 
         #levylista
         lista = []
-        #hakutulosten löytämis lista
-        loydetyt = []
-
-
-        #Jos tyhjä haku palautetaan tyhjä lista, 
-        if mj.strip() =="":
-            return loydetyt
-        
+            
         with open("levyt.csv") as tiedosto:
 
             for rivi in tiedosto.readlines():
                 uusi_levy = Levy()
                 #Tähän miten rivistä saadaan Artisin nimi, Levyn nimi, Julkaisuvuosi, Levy_yht, painos
                 uusi_rivi = rivi.split(";")
-                
-
-                
-            
+                    
                 uusi_levy.ArtistinNimi = uusi_rivi[0]
                 uusi_levy.LevynNimi = uusi_rivi[1]
                 uusi_levy.JulkaisuVuosi = uusi_rivi[2]
                 uusi_levy.Levy_yhtio = uusi_rivi[3]
                 uusi_levy.Painos = uusi_rivi[4]
                 lista.append(uusi_levy)
+        return lista
             #Listassa olio lista levyistä
+
+
+        #Etsiminen tässä metodissa:
+    def Etsi(self, mj = ""):
+            print("Ollaan Hae luokan Etsi levy Funktiossa.... ja etsitään merkkijonoa", mj)
+            lista = self.LueLevyt()
+             #hakutulosten löytämis lista
+            loydetyt = []
+
+            #Jos tyhjä haku palautetaan tyhjä lista, 
+            if mj.strip() =="":
+                return loydetyt
+
 
             #Hakeminen:
 
