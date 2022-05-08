@@ -24,6 +24,8 @@ Viikko4: Levyjen näytön korjaus tasamittaiseksi Graffisen käyttöliittymän t
 
 Viikko5: Tasaus jatkuu. ideointia, miten levyn tietoja voisi muokata tai levyä poistaa
 
+Viikko6: Table mode tutkiminen, saako valittua yhtä riviä kerrallaan muokkaukseen tai poistoon?
+
 
  
 UserStory1
