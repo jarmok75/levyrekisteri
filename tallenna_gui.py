@@ -33,7 +33,7 @@ class Tallenna_gui(QDialog,Ui_Tallenna):
     def tallennaLevy(self):
         
         bandi = self.ArtistinNimi.text()
-        if len(bandi) < 11:
+        if len(bandi) < 14:
             bandi = bandi + "\t"
         self.levy.ArtistinNimi = bandi
 
