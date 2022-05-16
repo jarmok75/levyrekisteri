@@ -31,20 +31,37 @@ class Tallenna_gui(QDialog,Ui_Tallenna):
         self.tallenna_ikkuna.show()
 
     def tallennaLevy(self):
+        #Tallennuksen tarkistukset tänne:
+
+        tarkistus = 0
         
-        bandi = self.ArtistinNimi.text()
+        bandi = self.ArtistinNimi.text()[:20]
         if len(bandi) < 14:
             bandi = bandi + "\t"
         self.levy.ArtistinNimi = bandi
 
-        ln = self.LevynNimi.text()
+        ln = self.LevynNimi.text()[:20]
         if len(ln) < 14:
             ln = ln + "\t"
 
         self.levy.LevynNimi = ln
-        self.levy.JulkaisuVuosi = self.Julkaisuvuosi.text()
-        self.levy.Levy_yhtio = self.LevYhtio.text()
-        self.levy.Painos = self.Painos.text()
+        
+        if self.Julkaisuvuosi.text().isnumeric() and len(self.Julkaisuvuosi.text()) < 5:
+            self.levy.JulkaisuVuosi = self.Julkaisuvuosi.text()
+            tarkistus = 1
+
+        else:
+            print("Anna numeerinen lukuarvo tai Luku liian pitkä yli 5 !")
+            self.close()
+            #Tähän Prompti ikkuna näytölle
+
+        self.levy.Levy_yhtio = self.LevYhtio.text()[:10]
+        self.levy.Painos = self.Painos.text()[:14]
+        if tarkistus == 1:
+            self.tallenna()
+
+    def tallenna(self):
+
         print ("Tallennetaan levyä..... ", str(self.ArtistinNimi.text()))
 
         
