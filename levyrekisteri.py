@@ -26,6 +26,16 @@ class Ui_LevyRekisteri(object):
         self.Naytä_Kaikki_levyt.setGeometry(QtCore.QRect(750, 50, 150, 28))
         self.Naytä_Kaikki_levyt.setObjectName("Naytä_Kaikki_levyt")
 
+        #Poista nappi:
+        self.Poista = QtWidgets.QPushButton(self.centralwidget)
+        self.Poista.setGeometry(QtCore.QRect(950, 85, 90, 28))
+        self.Poista.setObjectName("Poista")
+
+        #Muokkaa nappi:
+        self.Muokkaa = QtWidgets.QPushButton(self.centralwidget)
+        self.Muokkaa.setGeometry(QtCore.QRect(1100, 85, 90, 28))
+        self.Muokkaa.setObjectName("Muokkaa")
+
 
         #Etsi nappi:
         self.Etsi = QtWidgets.QPushButton(self.centralwidget)
@@ -69,6 +79,9 @@ class Ui_LevyRekisteri(object):
         LevyRekisteri.setWindowTitle(_translate("LevyRekisteri", "MainWindow"))
         self.Naytä_Kaikki_levyt.setText(_translate("LevyRekisteri", "Näytä Kaikki Levyt"))
         self.Etsi.setText(_translate("LevyRekisteri", "Etsi"))
+        self.Poista.setText(_translate("LevyRekisteri", "Poista"))
+        self.Muokkaa.setText(_translate("LevyRekisteri", "Muokkaa"))
+
         self.Sulje.setText(_translate("LevyRekisteri", "Sulje"))
         self.Nollaa.setText(_translate("LevyRekisteri", "Nollaa"))
         self.Lisaa.setText(_translate("LevyRekisteri", "Lisää"))

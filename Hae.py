@@ -1,4 +1,5 @@
-from PySide2.QtWidgets import QApplication, QMainWindow
+from PySide2.QtWidgets import QApplication, QMainWindow, QMessageBox
+
 from Levy import Levy
 
 
@@ -6,7 +7,7 @@ from Levy import Levy
 
 #Uuden ikkunan takia
 from tallenna import Ui_Tallenna
-#from tallenna_gui import Tallenna_gui
+from tallenna_gui import Tallenna_gui
 
 
 
@@ -17,6 +18,10 @@ class Hae(QMainWindow,Ui_Tallenna):
         super().__init__()
         self.haettavaString = ""
         #self.paaikkuna = MainWindow()
+        self.muokkaa = Tallenna_gui()
+
+
+
 
         
     #Tiedoston lukeminen ja palautetaan oliolistana 
@@ -24,27 +29,82 @@ class Hae(QMainWindow,Ui_Tallenna):
 
         #levylista
         lista = []
-            
-        with open("levyt.csv") as tiedosto:
 
-            for rivi in tiedosto.readlines():
-                uusi_levy = Levy()
-                #Tähän miten rivistä saadaan Artisin nimi, Levyn nimi, Julkaisuvuosi, Levy_yht, painos
-                uusi_rivi = rivi.split(";")
+        try:
+            
+            with open("levyt.csv") as tiedosto:
+
+                for rivi in tiedosto.readlines():
+                    uusi_levy = Levy()
+                    #Tähän miten rivistä saadaan Artisin nimi, Levyn nimi, Julkaisuvuosi, Levy_yht, painos
+                    uusi_rivi = rivi.split(";")
+                        
+                    uusi_levy.ArtistinNimi = uusi_rivi[0]
+                    uusi_levy.LevynNimi = uusi_rivi[1]
+                    uusi_levy.JulkaisuVuosi = uusi_rivi[2]
+                    uusi_levy.Levy_yhtio = uusi_rivi[3]
+                    uusi_levy.Painos = uusi_rivi[4]
+                    lista.append(uusi_levy)
+
+                    #Lista aakkosjärjestykseen Artistin Nimen perusteella
+                    lista.sort(key=lambda s: s.ArtistinNimi)
+
+       
+        except IndexError as ie:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("*** Indeksi yli laidan ***")
+            msg.setInformativeText("Indeksi yli laidan Poikkeus  ")
+            msg.setWindowTitle("*** Poikkeus *****")
+            msg.exec_()
+
                     
-                uusi_levy.ArtistinNimi = uusi_rivi[0]
-                uusi_levy.LevynNimi = uusi_rivi[1]
-                uusi_levy.JulkaisuVuosi = uusi_rivi[2]
-                uusi_levy.Levy_yhtio = uusi_rivi[3]
-                uusi_levy.Painos = uusi_rivi[4]
-                lista.append(uusi_levy)
+        except FileNotFoundError as te:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("*** Tiedotoa ei löydy ***")
+            msg.setInformativeText("Wrong file or file path  ")
+            msg.setWindowTitle("*** Ei löydy tiedostoa *****")
+            msg.exec_()
+            
+                 
+            
         return lista
             #Listassa olio lista levyistä
+
+    def MuokkaaLevya(self, muok = []):
+            #Ei toimi
+            #listaa = []
+            #listaa = self.LueLevyt()
+            #Tähän etsintä muokattava 
+            
+            if len(muok) == 0:
+                return 0
+
+            try:
+            
+                for levy1 in listaa:
+                    if levy1.ArtistinNimi == muok[0].ArtistinNimi:
+                        print("löytyi")
+                        self.muokkaa.nayta_formi()
+                        #Christian: Miten Formille levy1 tiedot muokkaukseen:?
+                        self.muokkaa.ArtistinNimi = "testi"
+                        self.muokkaa.tayta_tiedot()
+
+            except IndexError as ie:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Critical)
+                msg.setText("*** Indeksi yli laidan ***")
+                msg.setInformativeText("Indeksi yli laidan Poikkeus  ")
+                msg.setWindowTitle("*** Poikkeus *****")
+                msg.exec_()
+                    
+
 
 
         #Etsiminen tässä metodissa:
     def Etsi(self, mj = ""):
-            print("Ollaan Hae luokan Etsi levy Funktiossa.... ja etsitään merkkijonoa", mj)
+            #print("Ollaan Hae luokan Etsi levy Funktiossa.... ja etsitään merkkijonoa", mj)
             lista = self.LueLevyt()
              #hakutulosten löytämis lista
             loydetyt = []
@@ -59,32 +119,78 @@ class Hae(QMainWindow,Ui_Tallenna):
             #Käydään olio listaa läpi
             
             for levy in lista:
-                print(levy.ArtistinNimi, " "  ,levy.LevynNimi, " " , levy.JulkaisuVuosi, " " ,  levy.Levy_yhtio, " "  , levy.Painos)
+                #print(levy.ArtistinNimi, " "  ,levy.LevynNimi, " " , levy.JulkaisuVuosi, " " ,  levy.Levy_yhtio, " "  , levy.Painos)
                 #Verrataan ArtistinNimeä Haettuun merkkijonoon
                 artisti = levy.ArtistinNimi
                 levyn_nimi = levy.LevynNimi
                 #Löytyykö haettua merkkijonoa mj merkkijonojen artisti tai levyn_nimi sisältä
                 if  mj.lower() in artisti.lower() or mj.lower() in levyn_nimi.lower():
-                    print ("Löytyi Haettu artisti tai levy")
+                    #print ("Löytyi Haettu artisti tai levy")
                     #Lisätään löydetty levy listaan Artisti nimen tai Levyn nimen  perusteella
                     loydetyt.append(levy)
+                loydetyt.sort(key=lambda s: s.ArtistinNimi)
                 
             return loydetyt
                 
 
+    #Levyn poistaminen listasta
+    def PoistaLevy(self, pois=""):
+        #print("Ollaan poista levy metodissa")
+        poistot = []
+        kaikki = []
+        #Poistettavat objektit:
+        poistot = self.Etsi(pois)
+        if len(poistot) > 1:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("*** Virhe Poistossa ***")
+            msg.setInformativeText('Vain yksi Levy Voidaan poistaa kerrallaan')
+            msg.setWindowTitle("*** Virhe Poistossa  *****")
+            msg.exec_()
+    
+
+            return 0
+        #Kaikki objektit tässä listassa:
+        kaikki = self.LueLevyt()
+       
+        #Tähän löytyykö poistettava kaikki listasssa, jos löytyy, poistetaan kyseinen objekti listasta:
+
+        try:
+            for levy in kaikki:
+                artisti = levy.ArtistinNimi
+                levyn_nimi = levy.LevynNimi
+                for levy2 in poistot:
+                    artisti2 = levy2.ArtistinNimi
+                    levyn_nimi2 = levy2.LevynNimi
+                    if artisti == artisti2 and levyn_nimi == levyn_nimi2:
+                        kaikki.remove(levy)
+
+        except IndexError as ie:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("*** Indeksi yli laidan ***")
+            msg.setInformativeText("Indeksi yli laidan Poikkeus  ")
+            msg.setWindowTitle("*** Poikkeus *****")
+            msg.exec_()
+
+        #print (kaikki , "testi_poiston jälkeen")
+
+        self.TallennaLista(kaikki)
+
+    def TallennaLista(self, levylista = []):
+        #Tänne parametrina tuodun listan tallennus tiedostoon. Käytetään parametria "w" jolloin kirjoitetaan päälle
 
 
-    #Saantimetodi tiedoston sisällölle
-    def Hae_kaikki(self):
-        with open("levyt.csv") as tiedosto:
-
-
-
-            sisalto = tiedosto.read()
-            #Palauttaa listan
-            sisalto2 = sorted(sisalto.split("\n"))
-           
-            #Lista Sisalto 2 pitäisi saada merkki jono muotoon jotta voidaan näytttää tietoruudulla
-            
+        try:
+            with open("levyt.csv", "w") as tiedosto:
+                for i in levylista:
+                    rivit = i.ArtistinNimi +";"+ i.LevynNimi + ";"+ i.JulkaisuVuosi +";" +i.Levy_yhtio +";" +i.Painos 
                 
-        return sisalto2
+              
+                    tiedosto.write(rivit+";;\t")
+               
+                    tiedosto.write("\n")  
+        except FileNotFoundError:
+            print("Wrong file or file path")
+
+        

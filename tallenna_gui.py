@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QApplication, QDialog
+from PySide2.QtWidgets import QApplication, QDialog, QMessageBox
 
 from levyrekisteri import Ui_LevyRekisteri
 
@@ -7,6 +7,11 @@ from PySide2 import QtCore, QtGui, QtWidgets
 from tallenna import Ui_Tallenna
 
 from Levy import Levy
+
+
+
+
+
 
 
 
@@ -30,6 +35,13 @@ class Tallenna_gui(QDialog,Ui_Tallenna):
         self.tallenna_ikkuna = Tallenna_gui()
         self.tallenna_ikkuna.show()
 
+    def tayta_tiedot(self):
+
+        self.ArtistinNimi  = "test"
+        pass
+
+
+
     def tallennaLevy(self):
         #Tallennuksen tarkistukset tänne:
 
@@ -51,9 +63,15 @@ class Tallenna_gui(QDialog,Ui_Tallenna):
             tarkistus = 1
 
         else:
-            print("Anna numeerinen lukuarvo tai Luku liian pitkä yli 5 !")
-            self.close()
-            #Tähän Prompti ikkuna näytölle
+           
+            #self.close()
+            #Näytetään virheilmoitus jos vuosiluku ei numeerinen tai yli 5 numeroa pitkä:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("*** Virhe Vuosiluvussa ***")
+            msg.setInformativeText('Anna numeerinen lukuarvo tai Luku liian pitkä yli 5 !')
+            msg.setWindowTitle("*** Error *****")
+            msg.exec_()
 
         self.levy.Levy_yhtio = self.LevYhtio.text()[:10]
         self.levy.Painos = self.Painos.text()[:14]
@@ -67,21 +85,28 @@ class Tallenna_gui(QDialog,Ui_Tallenna):
         
         rivit = [self.levy.ArtistinNimi, self.levy.LevynNimi, self.levy.JulkaisuVuosi,self.levy.Levy_yhtio, self.levy.Painos ]
         #";".join(str(alkio) for alkio in rivit)
-        
- 
-        #print(rivit)
- 
 
         rivit[4] = str(rivit[4]) + ";"
-        #print(rivit)
+      
 
-
-        with open("levyt.csv", "a") as tiedosto:
-            for i in rivit:
-                #rivi = ";".join(i)
-                rivi = i
-                tiedosto.write(rivi+";\t")
-            tiedosto.write("\n")
+        #Uuden levyn tallennus:
+        try:
+            with open("levyt.csv", "a") as tiedosto:
+                for i in rivit:
+                    #rivi = ";".join(i)
+                    rivi = i
+                    tiedosto.write(rivi+";\t")
+                tiedosto.write("\n")
+                
+        except FileNotFoundError:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("*** Tiedotoa ei löydy ***")
+            msg.setInformativeText("Wrong file or file path  ")
+            msg.setWindowTitle("*** Tallennus ei onnistu *****")
+            msg.exec_()
+        
+            
 
 
        
