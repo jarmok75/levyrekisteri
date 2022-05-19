@@ -11,6 +11,8 @@ from Hae import Hae
 
 
 class MainWindow(QMainWindow,Ui_LevyRekisteri):
+    selected = None
+
     def __init__(self):
         super().__init__()
 
@@ -74,13 +76,17 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
         muokattavat = []
         muokattavat = self.Haku.Etsi(haettava)
         
-        
+        """
         if len(muokattavat) > 1:
             print("")
             self.TietoIkkuna.setText("Muokkaus toiminto odottaa toteutusta...")
         else:
             self.Haku.MuokkaaLevya(muokattavat)
-        
+        """
+        if self.selected:
+            self.Haku.MuokkaaLevya(self.selected)
+        else:
+            self.TietoIkkuna.setText("Muokkaus toiminto odottaa toteutusta...")
 
 
     def Poisti_vali(self):
@@ -97,6 +103,12 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
             return 0
 
         self.Haku.PoistaLevy(poistettava)
+
+      ### UUSI ####
+    def __format_levytieto__(self, levy):
+        return f'{levy.ArtistinNimi:35}{levy.LevynNimi:35}{levy.JulkaisuVuosi:8}{levy.Levy_yhtio:20}{levy.Painos:20}\n'
+    #############
+
 
     def Haku_vali(self):
 
@@ -132,7 +144,7 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
             tieto += levy.ArtistinNimi +"\t"+  levy.LevynNimi + "\t"  +  levy.JulkaisuVuosi + "\t"  + levy.Levy_yhtio +  "\t"  +levy.Painos + "\n"
         
         
-            
+        self.selected = levy  
             
         if len(tieto) > 2:
             self.TietoIkkuna.setText(tieto)

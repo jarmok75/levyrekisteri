@@ -18,7 +18,7 @@ class Hae(QMainWindow,Ui_Tallenna):
         super().__init__()
         self.haettavaString = ""
         #self.paaikkuna = MainWindow()
-        self.muokkaa = Tallenna_gui()
+        #self.muokkaa = Tallenna_gui()
 
 
 
@@ -72,12 +72,17 @@ class Hae(QMainWindow,Ui_Tallenna):
         return lista
             #Listassa olio lista levyistä
 
-    def MuokkaaLevya(self, muok = []):
-            #Ei toimi
-            #listaa = []
-            #listaa = self.LueLevyt()
-            #Tähän etsintä muokattava 
-            
+    def MuokkaaLevya(self, muok):
+
+            tallenna_ikkuna = Tallenna_gui(muok)
+            result = tallenna_ikkuna.exec_()
+            if not result:  # Dialog -> Cancel
+                return
+            # Dialog -> Ok
+            muokattu_levy = tallenna_ikkuna.levy
+            return muokattu_levy    ### KRISU: Mitä haluat tehdä sen kanssa?
+           
+            """
             if len(muok) == 0:
                 return 0
 
@@ -98,7 +103,7 @@ class Hae(QMainWindow,Ui_Tallenna):
                 msg.setInformativeText("Indeksi yli laidan Poikkeus  ")
                 msg.setWindowTitle("*** Poikkeus *****")
                 msg.exec_()
-                    
+            """        
 
 
 
