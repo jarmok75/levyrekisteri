@@ -21,8 +21,8 @@ from Levy import Levy
 class Tallenna_gui(QDialog,Ui_Tallenna):
     def __init__(self, levy=None):
         super().__init__()
-        # self.levy = Levy("","","","","")
-        self.levy = levy            #### KRISU: UUSI
+        #self.levy = Levy("","","","","")
+        self.levy = Levy()            #### KRISU: UUSI
         
 
     #Lisää objektit ruudulle määritelty levyrekisteri luokassa
