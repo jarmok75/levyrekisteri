@@ -12,7 +12,7 @@ from Hae import Hae
 class MainWindow(QMainWindow,Ui_LevyRekisteri):
     def __init__(self):
         super().__init__()
-
+       
 
         #Tuodaan Hae luokan ilmentymä
         self.Haku = Hae()
@@ -52,6 +52,7 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
         #Lisää metodeita
 
         self.tallenna = Tallenna_gui()
+        self.Hae_Levyt()
 
     def Muokkaa_vali(self):
         #Täällä ollaan kun painetaan Muokkaa- nappia
