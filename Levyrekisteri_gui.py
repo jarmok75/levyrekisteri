@@ -1,7 +1,6 @@
 from posixpath import split
 from PySide2.QtWidgets import QApplication, QMainWindow, QMessageBox
 
-
 #Importoidaan Qt designer5 tuottama Graaffinen käyttöliittymä aihio
 from levyrekisteri import Ui_LevyRekisteri
 #Uuden ikkunan takia
@@ -11,8 +10,6 @@ from Hae import Hae
 
 
 class MainWindow(QMainWindow,Ui_LevyRekisteri):
-    selected = None
-
     def __init__(self):
         super().__init__()
 
@@ -60,7 +57,7 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
         #Täällä ollaan kun painetaan Muokkaa- nappia
         
         self.TietoIkkuna.setText("Muokkaus toiminto odottaa toteutusta...")
-        haettava = str(self.Hakuruutu.text()).strip()
+        haettava = str(self.Hakuruutu.text())
 
         if len(haettava.strip()) < 2:
             msg = QMessageBox()
@@ -76,22 +73,19 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
         muokattavat = []
         muokattavat = self.Haku.Etsi(haettava)
         
-        """
+        
         if len(muokattavat) > 1:
             print("")
             self.TietoIkkuna.setText("Muokkaus toiminto odottaa toteutusta...")
         else:
             self.Haku.MuokkaaLevya(muokattavat)
-        """
-        if self.selected:
-            self.Haku.MuokkaaLevya(self.selected)
-        else:
-            self.TietoIkkuna.setText("Muokkaus toiminto odottaa toteutusta...")
+        
 
 
     def Poisti_vali(self):
         #print("Ollaan poisto napin vali metodissa")
         poistettava = str(self.Hakuruutu.text())
+
         if len(poistettava.strip()) < 2:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -101,20 +95,27 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
             msg.exec_()
             self.Hakuruutu.clear()
             return 0
-
         self.Haku.PoistaLevy(poistettava)
-
-      ### UUSI ####
-    def __format_levytieto__(self, levy):
-        return f'{levy.ArtistinNimi:35}{levy.LevynNimi:35}{levy.JulkaisuVuosi:8}{levy.Levy_yhtio:20}{levy.Painos:20}\n'
-    #############
-
+        
+        msg2 = QMessageBox()
+        msg2.setIcon(QMessageBox.Information)
+        msg2.setText("*** Poisto Onnistui ***")
+        msg2.setInformativeText('Levy on poistettu. ')
+        msg2.setWindowTitle("*** Poisto OK *****")
+        msg2.exec_()
+        
+        self.Hakuruutu.clear()
+        self.TietoIkkuna.clear()
 
     def Haku_vali(self):
 
         #Haettu teksti hakukentästä
-        haettava = str(self.Hakuruutu.text()).strip()
+        haettava = str(self.Hakuruutu.text())
 
+       
+
+        
+        
         if len(haettava.strip()) < 2:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -124,13 +125,10 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
             msg.exec_()
             self.Hakuruutu.clear()
             return 0
-
         
-
         if haettava !="":
             apu = "Etsitään merkkijonoa " + haettava + "..."
             self.TietoIkkuna.setText(apu)
-        
         
         #Kutsutaan Hae luokan Etsilevy funktiota missä etsi tiedostosta etsi toiminnallisuus toteutetaan
         haun_tulos = []
@@ -142,19 +140,37 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
 
         for levy in haun_tulos:
             tieto += levy.ArtistinNimi +"\t"+  levy.LevynNimi + "\t"  +  levy.JulkaisuVuosi + "\t"  + levy.Levy_yhtio +  "\t"  +levy.Painos + "\n"
+            
+            #self.TietoIkkuna.setText("\n".join(tieto))
         
-        
-        self.selected = levy  
+            
             
         if len(tieto) > 2:
             self.TietoIkkuna.setText(tieto)
-        
+        else:
+            self.TietoIkkuna.setText("Ei löydy haettua tietoa....")
+            self.Hakuruutu.clear()
         
 
 
         #Tätä Kutsutaan nyt kun painetaan "Näytä Kaikki levyt" nappia
     def Hae_Levyt(self):
 
+        """
+        tieto =""
+        self.TietoIkkuna.setText("Haetaan levyjä....")
+        sis = self.Haku.Hae_kaikki()
+
+
+        for rivi in sis:
+
+
+                tieto += rivi +"\n"
+                tieto = tieto.replace(";","\t")
+
+        self.TietoIkkuna.setText(tieto)
+
+        """
         haun_tulos = []
         haun_tulos = self.Haku.LueLevyt()
         
@@ -163,11 +179,18 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
         for levy in haun_tulos:
             tieto += levy.ArtistinNimi +"\t"+  levy.LevynNimi + "\t"  +  levy.JulkaisuVuosi + "\t"  + levy.Levy_yhtio +  "\t"  +levy.Painos + "\n"
             
+        
+        
             
         if len(haun_tulos) > 0:
             self.TietoIkkuna.setText(tieto)
+        else:
+            self.TietoIkkuna.setText("Ei löydy haettua tietoa....")
+            self.Hakuruutu.clear()
        
-          
+      
+        
+      
 
 
     def NollaaHaku(self):
@@ -176,7 +199,7 @@ class MainWindow(QMainWindow,Ui_LevyRekisteri):
 
 
     def LisaaLevy(self):
-        
+        #Tähän Miten saa Tallenna formi esiin?
         self.tallenna.nayta_formi()
 
 

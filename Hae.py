@@ -18,7 +18,6 @@ class Hae(QMainWindow,Ui_Tallenna):
         super().__init__()
         self.haettavaString = ""
         #self.paaikkuna = MainWindow()
-        #self.muokkaa = Tallenna_gui()
 
 
 
@@ -29,7 +28,7 @@ class Hae(QMainWindow,Ui_Tallenna):
 
         #levylista
         lista = []
-
+            
         try:
             
             with open("levyt.csv") as tiedosto:
@@ -66,44 +65,27 @@ class Hae(QMainWindow,Ui_Tallenna):
             msg.setInformativeText("Wrong file or file path  ")
             msg.setWindowTitle("*** Ei löydy tiedostoa *****")
             msg.exec_()
-            
-                 
-            
+
         return lista
             #Listassa olio lista levyistä
 
-    def MuokkaaLevya(self, muok):
+    def MuokkaaLevya(self, muok = []):
+            #Ei toimi
+            listaa = []
+            listaa = self.LueLevyt()
+            #Tähän etsintä muokattava 
 
-            tallenna_ikkuna = Tallenna_gui(muok)
-            result = tallenna_ikkuna.exec_()
-            if not result:  # Dialog -> Cancel
-                return
-            # Dialog -> Ok
-            muokattu_levy = tallenna_ikkuna.levy
-            return muokattu_levy    ### KRISU: Mitä haluat tehdä sen kanssa?
-           
-            """
             if len(muok) == 0:
                 return 0
-
-            try:
             
-                for levy1 in listaa:
-                    if levy1.ArtistinNimi == muok[0].ArtistinNimi:
-                        print("löytyi")
-                        self.muokkaa.nayta_formi()
-                        #Christian: Miten Formille levy1 tiedot muokkaukseen:?
-                        self.muokkaa.ArtistinNimi = "testi"
-                        self.muokkaa.tayta_tiedot()
-
-            except IndexError as ie:
-                msg = QMessageBox()
-                msg.setIcon(QMessageBox.Critical)
-                msg.setText("*** Indeksi yli laidan ***")
-                msg.setInformativeText("Indeksi yli laidan Poikkeus  ")
-                msg.setWindowTitle("*** Poikkeus *****")
-                msg.exec_()
-            """        
+            for levy1 in listaa:
+                if levy1.ArtistinNimi == muok[0].ArtistinNimi:
+                    print("löytyi")
+                    Tallenna_gui.nayta_formi(self)
+                    #Christian: Miten Formille levy1 tiedot muokkaukseen:?
+                    levy1.ArtistinNimi = Tallenna_gui.levy.ArtistinNimi.text()
+                    
+                    
 
 
 
@@ -160,23 +142,15 @@ class Hae(QMainWindow,Ui_Tallenna):
        
         #Tähän löytyykö poistettava kaikki listasssa, jos löytyy, poistetaan kyseinen objekti listasta:
 
-        try:
-            for levy in kaikki:
-                artisti = levy.ArtistinNimi
-                levyn_nimi = levy.LevynNimi
-                for levy2 in poistot:
-                    artisti2 = levy2.ArtistinNimi
-                    levyn_nimi2 = levy2.LevynNimi
-                    if artisti == artisti2 and levyn_nimi == levyn_nimi2:
-                        kaikki.remove(levy)
-
-        except IndexError as ie:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Critical)
-            msg.setText("*** Indeksi yli laidan ***")
-            msg.setInformativeText("Indeksi yli laidan Poikkeus  ")
-            msg.setWindowTitle("*** Poikkeus *****")
-            msg.exec_()
+     
+        for levy in kaikki:
+            artisti = levy.ArtistinNimi
+            levyn_nimi = levy.LevynNimi
+            for levy2 in poistot:
+                artisti2 = levy2.ArtistinNimi
+                levyn_nimi2 = levy2.LevynNimi
+                if artisti == artisti2 and levyn_nimi == levyn_nimi2:
+                    kaikki.remove(levy)
 
         #print (kaikki , "testi_poiston jälkeen")
 
@@ -184,18 +158,13 @@ class Hae(QMainWindow,Ui_Tallenna):
 
     def TallennaLista(self, levylista = []):
         #Tänne parametrina tuodun listan tallennus tiedostoon. Käytetään parametria "w" jolloin kirjoitetaan päälle
-
-
-        try:
-            with open("levyt.csv", "w") as tiedosto:
-                for i in levylista:
-                    rivit = i.ArtistinNimi +";"+ i.LevynNimi + ";"+ i.JulkaisuVuosi +";" +i.Levy_yhtio +";" +i.Painos 
+        with open("levyt.csv", "w") as tiedosto:
+            for i in levylista:
+                rivit = i.ArtistinNimi +";"+ i.LevynNimi + ";"+ i.JulkaisuVuosi +";" +i.Levy_yhtio +";" +i.Painos 
                 
               
-                    tiedosto.write(rivit+";;\t")
+                tiedosto.write(rivit+";;\t")
                
-                    tiedosto.write("\n")  
-        except FileNotFoundError:
-            print("Wrong file or file path")
+                tiedosto.write("\n")  
 
         

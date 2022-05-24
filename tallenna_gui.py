@@ -19,80 +19,57 @@ from Levy import Levy
 
 
 class Tallenna_gui(QDialog,Ui_Tallenna):
-    def __init__(self, levy=None):
+    def __init__(self):
         super().__init__()
-        #self.levy = Levy("","","","","")
-        self.levy = Levy()            #### KRISU: UUSI
+        self.levy = Levy("","","","","")
         
 
     #Lisää objektit ruudulle määritelty levyrekisteri luokassa
         self.setupUi(self)
-        ##### KRISU: UUSI
-        if self.levy:
-            self.ArtistinNimi.setText(self.levy.ArtistinNimi)
-            self.LevynNimi.setText(self.levy.LevynNimi)
-            self.Julkaisuvuosi.setText(self.levy.JulkaisuVuosi)
-            self.LevYhtio.setText(self.levy.Levy_yhtio)
-            self.Painos.setText(self.levy.Painos)
-        ################
         self.buttonBox.accepted.connect(self.tallennaLevy)
-        self.buttonBox.rejected.connect(self.reject)            #### KRISU: MUOKATTU
+        self.buttonBox.rejected.connect(self.close)
 
-    def nayta_formi(self): # Ei tarvitse
+    def nayta_formi(self):
 
-         self.tallenna_ikkuna = QDialog()
-         self.tallenna_ikkuna = Tallenna_gui()
-         self.tallenna_ikkuna.show()
+        self.tallenna_ikkuna = QDialog()
+        self.tallenna_ikkuna = Tallenna_gui()
+        self.tallenna_ikkuna.show()
 
     def tallennaLevy(self):
         #Tallennuksen tarkistukset tänne:
 
-        ##### KRISU: UUSI
-        self.levy.ArtistinNimi = self.ArtistinNimi.text()
-        self.levy.LevynNimi = self.LevynNimi.text()
-        self.levy.JulkaisuVuosi = self.Julkaisuvuosi.text()
-        self.levy.Levy_yhtio = self.LevYhtio.text()
-        self.levy.Painos = self.Painos.text()
-        #################        
-        if True: # KRISU: Jos kaikki hyvin...
-            self.accept()
+        tarkistus = 0
+        
+        bandi = self.ArtistinNimi.text()[:20]
+        if len(bandi) < 14:
+            bandi = bandi + "\t"
+        self.levy.ArtistinNimi = bandi
+
+        ln = self.LevynNimi.text()[:20]
+        if len(ln) < 14:
+            ln = ln + "\t"
+
+        self.levy.LevynNimi = ln
+        
+        if self.Julkaisuvuosi.text().isnumeric() and len(self.Julkaisuvuosi.text()) < 5:
+            self.levy.JulkaisuVuosi = self.Julkaisuvuosi.text()
+            tarkistus = 1
+
         else:
-            pass
-            # SHOW ERROR
-
-        # KRISU: En ymmärrä tätä
-        # tarkistus = 0
-        
-        # bandi = self.ArtistinNimi.text()[:20]
-        # if len(bandi) < 14:
-        #     bandi = bandi + "\t"
-        # self.levy.ArtistinNimi = bandi
-
-        # ln = self.LevynNimi.text()[:20]
-        # if len(ln) < 14:
-        #     ln = ln + "\t"
-
-        # self.levy.LevynNimi = ln
-        
-        # if self.Julkaisuvuosi.text().isnumeric() and len(self.Julkaisuvuosi.text()) < 5:
-        #     self.levy.JulkaisuVuosi = self.Julkaisuvuosi.text()
-        #     tarkistus = 1
-
-        # else:
            
-        #     #self.close()
-        #     #Näytetään virheilmoitus jos vuosiluku ei numeerinen tai yli 5 numeroa pitkä:
-        #     msg = QMessageBox()
-        #     msg.setIcon(QMessageBox.Critical)
-        #     msg.setText("*** Virhe Vuosiluvussa ***")
-        #     msg.setInformativeText('Anna numeerinen lukuarvo tai Luku liian pitkä yli 5 !')
-        #     msg.setWindowTitle("*** Error *****")
-        #     msg.exec_()
+            #self.close()
+            #Näytetään virheilmoitus jos vuosiluku ei numeerinen tai yli 5 numeroa pitkä:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("*** Virhe Vuosiluvussa ***")
+            msg.setInformativeText('Anna numeerinen lukuarvo tai Luku liian pitkä yli 5 !')
+            msg.setWindowTitle("*** Error *****")
+            msg.exec_()
 
-        # self.levy.Levy_yhtio = self.LevYhtio.text()[:10]
-        # self.levy.Painos = self.Painos.text()[:14]
-        # if tarkistus == 1:
-        #     self.tallenna()
+        self.levy.Levy_yhtio = self.LevYhtio.text()[:10]
+        self.levy.Painos = self.Painos.text()[:14]
+        if tarkistus == 1:
+            self.tallenna()
 
     def tallenna(self):
 
